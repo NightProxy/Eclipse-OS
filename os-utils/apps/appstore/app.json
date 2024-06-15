@@ -1,0 +1,8 @@
+{
+    "id": "appstore",
+    "title": "App Store",
+    "description": "An app to install and manage orher apps.",
+    "type": "react",
+    "main": "./app.jsx"
+  }
+  

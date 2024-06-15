@@ -16,7 +16,7 @@ const AppStore = () => {
   }, []);
 
   const handleInstall = (app) => {
-    console.log(`Installing ${app.name}`);
+    console.log(`Installing ${app.title}`);
   };
 
   return (
@@ -24,9 +24,9 @@ const AppStore = () => {
       <h1>App Store</h1>
       <ul>
         {apps.map(app => (
-          <li key={app.name}>
+          <li key={app.title}>
             <div>
-              {app.name}
+              {app.title}
               <button onClick={() => handleInstall(app)}>Install</button>
             </div>
           </li>

@@ -7,13 +7,14 @@
     "dev": "concurrently \"vite\" \"node index.js\"",
     "build": "vite build",
     "start": "node index.js",
+    "bstart": "rm -rf dist && npm run build && npm start",
     "format": "prettier --write ."
   },
   "dependencies": {
     "express": "^4.17.1",
     "dotenv": "^10.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "concurrently": "^6.2.1"
   },
   "devDependencies": {

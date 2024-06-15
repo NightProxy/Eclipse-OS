@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/imgs/main.png">
+   <link rel="apple-touch-icon" sizes="180x180" href="/assets/imgs/main.png">
+   <link rel="apple-touch-icon" sizes="76x76" href="/assets/imgs/main.png">
+   <link rel="shortcut icon" type="image/png" href="/assets/imgs/main.png">
+   <link rel="icon" type="image/x-icon" href="/assets/imgs/main.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="title" content="Umbra MP3" />
+  <meta name="description" content="A fast, customizable, compatible MP3 player" />
+  <title>Umbra Player</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" id="themecss" href="./assets/css/index.css" />
+</head>
+
+<body>
+  <h1>Umbra Player</h1>
+  <div id="mp3-container" class="grid"></div>
+  <audio id="audioPlayer" controls></audio>
+  <input type="file" id="fileInput" multiple />
+  <div id="player" class="player">
+    <div id="controls" class="controls">
+      <button id="play">
+      </button>
+      <button id="rewind">
+        <span class="material-symbols-outlined">
+          replay_5
+        </span>
+      </button>
+      <button id="forward">
+        <span class="material-symbols-outlined">
+          forward_5
+        </span>
+      </button>
+      <button id="repeat">
+      </button>
+      <button id="shuffle"></button>
+      </button>
+      <div id="songInfo">
+        <img id="songImg" />
+        <p id="songName"></p>
+      </div>
+    </div>
+    <div class="right-side-bottom-menu">
+      <button id="uploadSong">
+        <span class="material-symbols-outlined">
+          upload
+        </span>
+      </button>
+    </div>
+  </div>
+  <script src="./assets/js/index.js"></script>
+</body>
+
+</html>

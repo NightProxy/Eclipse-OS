@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --main-color: #8000ff;
+    --base-color: #212121;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--base-color);
+    color: var(--main-color);
+}
+
+body::-webkit-scrollbar {
+    width: 6px;
+    will-change: transform;
+}
+
+body::-webkit-scrollbar-track {
+    background: #2f2f2f;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--main-color);
+    border-radius: 10px;
+    will-change: transform;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+
+#audioPlayer {
+    display: none;
+}
+
+#fileInput {
+    display: none;
+}
+
+.bottom-menu {
+    overflow: hidden;
+    transition: height 0.5s ease;
+    height: 0px;
+}
+
+.right-side-bottom-menu {
+    right:0;
+    position: fixed;
+}
+
+.player {
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    bottom: 0px;
+    right:0;
+    width: 100vw;
+    border-top: 1px solid var(--main-color);
+}
+
+.controls {
+    display: flex;
+    gap: 2px;
+    width: 50%
+}
+
+#mp3-container {
+    height: 80vh;
+}
+
+.context-menu {
+    width: 200px;
+    position: absolute;
+    z-index: 999999;
+    color: var(--main-color);
+    background-color: #212121;
+    padding: 10px;
+    border-radius: 20px;
+
+}
+.context-menu div:hover {
+    border: 1px solid var(--main-color);
+    border-radius: 5px;
+}
+
+button span {
+    color: var(--main-color);
+    background-color: var(--base-color);
+    border-radius: 30px;
+
+}
+
+button span:hover {
+    color: #fff;
+    background-color: var(--base-color);
+}
+
+button {
+    background-color: var(--base-color);
+    appearance: none;
+    border: 0.125em solid var(--base-color);
+
+}
+
+button:hover {
+    border: 1px solid var(--base-color);
+}
+
+.mp3-item {
+    width: 90px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(15px);
+    transition: 0.3s ease-in-out;
+    height: 150px;
+}
+
+.mp3-item img {
+    border-radius: 10px;
+}
+
+.mp3-item h5 {
+    margin: 0;
+}
+
+.mp3-item:hover {
+    border: 1px solid rgba(136, 4, 251, 0.593);
+
+}
+

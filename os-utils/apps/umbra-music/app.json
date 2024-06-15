@@ -1,0 +1,8 @@
+{
+    "id": "umbra",
+    "title": "Umbra Music",
+    "description": "Umbra Music Player",
+    "type": "normal",
+    "main": "./index.html"
+  }
+  

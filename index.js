@@ -1,15 +1,23 @@
-const http = require('http');
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
-require('dotenv').config();
+import http from 'http';
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
-// Middleware to serve static files
-app.use(express.static(path.join(__dirname, 'build')));
+// Middleware to serve static files from the dist directory
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Middleware to serve static files from the os-utils/apps directory
+app.use('/apps', express.static(path.join(__dirname, 'os-utils', 'apps')));
 
 // Route to get apps dynamically
 app.get('/api/apps', (req, res) => {
@@ -29,7 +37,7 @@ app.get('/api/apps', (req, res) => {
 
 // Serve React App
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 const server = http.createServer(app);

@@ -1,0 +1,8 @@
+{
+    "id": "photos",
+    "title": "Photos",
+    "description": "An app to view and manage photos",
+    "type": "react",
+    "main": "./app.jsx"
+  }
+  

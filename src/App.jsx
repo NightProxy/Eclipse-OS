@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Taskbar from './components/Taskbar';
 import AppWindow from './components/AppWindow';
-import FileEditor from './components/FileEditor';
-import Settings from './components/Settings';
-import AppStore from './components/AppStore';
+import ErrorBoundary from './components/ErrorBoundary';
+import PopupMenu from './components/PopupMenu';
 
 const App = () => {
   const [taskbarPosition, setTaskbarPosition] = useState('bottom');
@@ -46,17 +45,9 @@ const App = () => {
     alert('Right-click menu: Add shortcut, Change wallpaper');
   };
 
-  const handleAppClick = id => {
-    console.log(`App ${id} clicked`);
-  };
-
-  const addApp = (app) => {
-    setOpenApps([...openApps, { id: appCounter, title: app.name }]);
+  const handleAppClick = app => {
+    setOpenApps([...openApps, { id: appCounter, title: app.title, type: app.type }]);
     setAppCounter(appCounter + 1);
-  };
-
-  const updateSettings = newSettings => {
-    setSettings(newSettings);
   };
 
   return (
@@ -65,8 +56,17 @@ const App = () => {
         position={taskbarPosition}
         apps={openApps}
         onRightClick={handleTaskbarRightClick}
-        onAppClick={handleAppClick}
-      />
+      >
+        <PopupMenu taskbarPosition={taskbarPosition}>
+          {apps.length === 0 ? (
+            <p>No apps installed</p>
+          ) : (
+            apps.map(app => (
+              <button key={app.id} onClick={() => handleAppClick(app)}>{app.title}</button>
+            ))
+          )}
+        </PopupMenu>
+      </Taskbar>
       {openApps.map(app => (
         <AppWindow
           key={app.id}
@@ -76,14 +76,15 @@ const App = () => {
           onMinimize={() => handleAppMinimize(app.id)}
           onExpand={() => handleAppExpand(app.id)}
         >
-          {React.createElement(require(`../os-utils/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/app.js`).default)}
+          <ErrorBoundary>
+            {app.type === 'react' ? (
+              React.createElement(require(`../os-utils/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/app.js`).default)
+            ) : (
+              <iframe src={`/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/index.html`} style={{ width: '100%', height: '100%' }} />
+            )}
+          </ErrorBoundary>
         </AppWindow>
       ))}
-      {apps.map(app => (
-        <button key={app.id} onClick={() => addApp(app)}>{app.name}</button>
-      ))}
-      <Settings settings={settings} updateSettings={updateSettings} />
-      <AppStore />
     </div>
   );
 };
