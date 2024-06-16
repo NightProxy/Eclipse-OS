@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Taskbar from './components/Taskbar';
 import AppWindow from './components/AppWindow';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -50,6 +50,10 @@ const App = () => {
     setAppCounter(appCounter + 1);
   };
 
+  const loadAppComponent = (app) => {
+    return React.lazy(() => import(`../os-utils/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/app.jsx`));
+  };
+
   return (
     <div className={`desktop ${settings.theme}`} onContextMenu={handleDesktopRightClick}>
       <Taskbar
@@ -67,24 +71,29 @@ const App = () => {
           )}
         </PopupMenu>
       </Taskbar>
-      {openApps.map(app => (
-        <AppWindow
-          key={app.id}
-          id={app.id}
-          title={app.title}
-          onClose={() => handleAppClose(app.id)}
-          onMinimize={() => handleAppMinimize(app.id)}
-          onExpand={() => handleAppExpand(app.id)}
-        >
-          <ErrorBoundary>
-            {app.type === 'react' ? (
-              React.createElement(require(`../os-utils/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/app.js`).default)
-            ) : (
-              <iframe src={`/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/index.html`} style={{ width: '100%', height: '100%' }} />
-            )}
-          </ErrorBoundary>
-        </AppWindow>
-      ))}
+      {openApps.map(app => {
+        const AppComponent = loadAppComponent(app);
+        return (
+          <AppWindow
+            key={app.id}
+            id={app.id}
+            title={app.title}
+            onClose={() => handleAppClose(app.id)}
+            onMinimize={() => handleAppMinimize(app.id)}
+            onExpand={() => handleAppExpand(app.id)}
+          >
+            <ErrorBoundary>
+              <Suspense fallback={<div>Loading...</div>}>
+                {app.type === 'react' ? (
+                  <AppComponent />
+                ) : (
+                  <iframe src={`/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/index.html`} style={{ width: '100%', height: '100%' }} />
+                )}
+              </Suspense>
+            </ErrorBoundary>
+          </AppWindow>
+        );
+      })}
     </div>
   );
 };

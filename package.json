@@ -1,6 +1,5 @@
 {
-  "name": "my-webos",
-  "private": true,
+  "name": "eclipse-os",
   "version": "1.0.0",
   "type": "module",
   "scripts": {

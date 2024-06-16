@@ -1,5 +1,5 @@
 // public/service-worker.js
-const CACHE_NAME = 'my-webos-cache-v1';
+const CACHE_NAME = 'eclipse-os-cache';
 const urlsToCache = [
   '/',
   '/index.html',
