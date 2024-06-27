@@ -1,8 +1,12 @@
+// src/components/App.jsx
 import React, { useEffect, useState, Suspense } from 'react';
-import Taskbar from './components/Taskbar';
-import AppWindow from './components/AppWindow';
-import ErrorBoundary from './components/ErrorBoundary';
-import PopupMenu from './components/PopupMenu';
+import Taskbar from './Taskbar';
+import AppWindow from './AppWindow';
+import ErrorBoundary from './ErrorBoundary';
+import PopupMenu from './PopupMenu';
+import htm from 'htm';
+
+const html = htm.bind(React.createElement);
 
 const App = () => {
   const [taskbarPosition, setTaskbarPosition] = useState('bottom');
@@ -17,7 +21,8 @@ const App = () => {
   useEffect(() => {
     fetch('/api/apps')
       .then(res => res.json())
-      .then(data => setApps(data));
+      .then(data => setApps(data))
+      .catch(error => console.error('Error fetching apps:', error));
   }, []);
 
   const handleAppClose = id => {
@@ -46,7 +51,7 @@ const App = () => {
   };
 
   const handleAppClick = app => {
-    setOpenApps([...openApps, { id: appCounter, title: app.title, type: app.type }]);
+    setOpenApps([...openApps, { id: appCounter, title: app.name, type: app.type }]);
     setAppCounter(appCounter + 1);
   };
 
@@ -66,7 +71,7 @@ const App = () => {
             <p>No apps installed</p>
           ) : (
             apps.map(app => (
-              <button key={app.id} onClick={() => handleAppClick(app)}>{app.title}</button>
+              <button key={app.id} onClick={() => handleAppClick(app)}>{app.name}</button>
             ))
           )}
         </PopupMenu>
@@ -85,7 +90,7 @@ const App = () => {
             <ErrorBoundary>
               <Suspense fallback={<div>Loading...</div>}>
                 {app.type === 'react' ? (
-                  <AppComponent />
+                  html`<${AppComponent} />`
                 ) : (
                   <iframe src={`/apps/${app.title.replace(/\s+/g, '-').toLowerCase()}/index.html`} style={{ width: '100%', height: '100%' }} />
                 )}
